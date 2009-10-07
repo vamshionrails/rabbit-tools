@@ -23,22 +23,11 @@
 require 'terminal-table/import'
 Dir[File.join(File.dirname(__FILE__), 'rabbit-tools', '**', '*.rb')].sort.each { |lib| require lib }
 
+# ==Usage
+#:include:README.md
 module RabbitMQ
   
-  # module Numeric
-  #   def to_human
-  #     units = %w{B KB MB GB TB}
-  #     e = (Math.log(self)/Math.log(1024)).floor
-  #     s = "%.3f" % (to_f / 1024**e)
-  #     s.sub(/\.?0*$/, units[e])
-  #   end
-  # end
-  # 
-  # class ::Numeric 
-  #   include RabbitMQ::Numeric
-  # end
-    
-  class CLI
+  class CLI # :nodoc:
     
     def initialize
       @out = STDOUT

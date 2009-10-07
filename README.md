@@ -6,7 +6,7 @@
 	|_|  \__,_|_.__/|_.__/|_|\__|  \__\___/ \___/|_|___/
 
 Overview
---------
+========
 
 This gem provides the 
 
@@ -20,7 +20,7 @@ command that dumps the following information about a local RabbitMQ server:
 * list_connections
 
 Documentation
--------------
+=============
 
 This release was successfully tested against:
 
@@ -30,6 +30,6 @@ This release was successfully tested against:
 See: [http://dev.coravy.com/wiki/display/OpenSource/RabbitMQ+Tools](http://dev.coravy.com/wiki/display/OpenSource/RabbitMQ+Tools)
 
 Copyright
----------
+=========
 
 Copyright (c) 2009 Stefan Saasen. See LICENSE for details.

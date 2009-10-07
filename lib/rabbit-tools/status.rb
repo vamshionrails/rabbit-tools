@@ -2,7 +2,8 @@
 #  Copyright (c) 2008. All rights reserved.
 require 'popen4'
 module RabbitMQ
-  module Status
+
+  module Status # :nodoc: all
   
     module Formatter
       class BaseFormatter

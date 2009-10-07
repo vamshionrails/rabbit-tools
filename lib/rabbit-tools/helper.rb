@@ -1,7 +1,8 @@
 #  Created by Stefan Saasen.
 #  Copyright (c) 2008. All rights reserved.
 module RabbitMQ
-  module Helper
+  
+  module Helper # :nodoc: all
     
       class FormatterFactory
         class << self
