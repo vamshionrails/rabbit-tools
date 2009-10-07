@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rabbit-tools}
-  s.version = "0.1.5"
+  s.version = "0.1.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Stefan Saasen"]
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
      "lib/rabbit-tools.rb",
      "lib/rabbit-tools/helper.rb",
      "lib/rabbit-tools/status.rb",
-     "test/rabbit-tools_test.rb",
+     "test/status_test.rb",
      "test/test_helper.rb"
   ]
   s.homepage = %q{http://github.com/juretta/rabbit-tools}
@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{RabbitMQ tools}
   s.test_files = [
-    "test/rabbit-tools_test.rb",
+    "test/status_test.rb",
      "test/test_helper.rb"
   ]
 
