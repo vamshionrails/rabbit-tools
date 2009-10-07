@@ -11,6 +11,10 @@ command that dumps the following information about a local RabbitMQ server:
 * list queues
 * list_connections
 
+== Documentation
+
+See: http://dev.coravy.com/wiki/display/OpenSource/RabbitMQ+Tools
+
 == Copyright
 
 Copyright (c) 2009 Stefan Saasen. See LICENSE for details.
