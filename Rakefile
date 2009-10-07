@@ -4,7 +4,7 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "rabbit-tools"
+    gem.name = gem.rubyforge_project = "rabbit-tools" # http://rabbit-tools.rubyforge.org/
     gem.summary = %Q{RabbitMQ tools}
     gem.email = "s@juretta.com"
     gem.homepage = "http://github.com/juretta/rabbit-tools"
@@ -20,6 +20,7 @@ begin
 
   # Gemcutter support (Jeweler -> 1.2.1)
   Jeweler::GemcutterTasks.new
+  Jeweler::RubyforgeTasks.new
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
