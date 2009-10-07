@@ -18,8 +18,8 @@ begin
     gem.extra_rdoc_files = ["README.md"]
   end
 
-  # Gemcutter support
-  #Jeweler::GemcutterTasks.new
+  # Gemcutter support (Jeweler -> 1.2.1)
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
