@@ -42,6 +42,7 @@ module RabbitMQ
     
     def initialize
       @out = STDOUT
+      @formatter = RabbitMQ::Helper::Formatter.new
     end
     
     def run(args)
@@ -49,25 +50,28 @@ module RabbitMQ
       # TODO 
       #   Extract command line args to specify the rabbitmqctl binary
       
-      [RabbitMQ::Status::Queues.new, RabbitMQ::Status::Exchanges.new, RabbitMQ::Status::Bindings.new, RabbitMQ::Status::Connections.new].each do |status|
-        formatter = RabbitMQ::Helper::Formatter.new
-        info = table do |t|
-          q = status
-          elements = q.args
-          t.headings = elements
-          q.list.each do |lines|
-            t << lines
-          end
-        end
+      [RabbitMQ::Status::Queues.new, 
+        RabbitMQ::Status::Exchanges.new, 
+        RabbitMQ::Status::Bindings.new, 
+        RabbitMQ::Status::Connections.new].each do |status|
         
-        @out.puts formatter.yellow(status.cmd)
-        if info && !info.empty?
+        rows = status.list
+
+        @out.puts @formatter.yellow(status.cmd)
+        if rows && !rows.empty?
+          info = table do |t|
+            t.headings = status.args
+            rows.each do |lines|
+              t << lines
+            end
+          end
           @out.print info
           @out.puts ""
         else
           @out.puts "-"
         end
         @out.flush
+        @formatter.reset!
       end
     end
   end
