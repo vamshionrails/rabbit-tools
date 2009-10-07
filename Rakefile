@@ -6,10 +6,14 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "rabbit-tools"
     gem.summary = %Q{RabbitMQ tools}
-    gem.email = "stefan@coravy.com"
+    gem.email = "s@juretta.com"
     gem.homepage = "http://github.com/juretta/rabbit-tools"
     gem.authors = ["Stefan Saasen"]
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+    gem.bindir = 'bin'
+    gem.executables = ['rabbitstatus']
+    gem.add_dependency('visionmedia-terminal-table')
+    gem.files = FileList["{tests,lib}/**/*"].exclude("rdoc").to_a.flatten
   end
 
 rescue LoadError
