@@ -4,12 +4,32 @@ require 'popen4'
 module RabbitMQ
   module Status
   
-    class AbstractCommand
+    module Formatter
+      class BaseFormatter
+        def format(str)
+          str # as is
+        end
+      end
+      
+      # IEC 60027-2 binary prefix (1 KiB = 1024 bytes)
+      class ByteFormatter < BaseFormatter
+        UNITS = %w{bytes KiB MiB GiB TiB}
+        BYTES = 1024
+        def format(str)
+          e = (Math.log(str.to_i)/Math.log(BYTES)).floor
+          s = "%.3f" % (str.to_f / BYTES**e)
+          s.sub(/\.?0*$/, " #{UNITS[e]}")
+        end
+      end
+    end
+  
+    class AbstractCommand      
       @@binary = "rabbitmqctl" # rabbitmqctl must be on $PATH
       attr_reader :args, :cmd
     
       def initialize(cmd, args = [])
         @cmd, @args = cmd, args
+        @formatter = Hash.new(Formatter::BaseFormatter.new)
       end
     
       def run_cmd
@@ -21,19 +41,31 @@ module RabbitMQ
       end
     
       @protected
+      
+      def register_formatter(name, formatter)
+        @formatter[name.to_s] = formatter
+      end
+      
       def parse(cmd_output)
         lines = cmd_output.split("\n")
-        lines[1..lines.length-2].map{|line| line.split("\t")}
+        lines[1..lines.length-2].map do |line|
+          output = []
+          line.split("\t").each_with_index do |elem, idx|
+            output << @formatter[@args[idx].to_s].format(elem)
+          end
+          output        
+        end#.map{|line| line.split("\t")}
       end
       
       def list
         parse(run_cmd)
-      end
+      end      
     end
 
     class Queues < AbstractCommand
       def initialize
         super "list_queues", %w(name durable auto_delete messages_ready messages_unacknowledged messages consumers memory transactions node)
+        register_formatter "memory", Formatter::ByteFormatter.new 
       end
     end
   
