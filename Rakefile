@@ -13,6 +13,7 @@ begin
     gem.bindir = 'bin'
     gem.executables = ['rabbitstatus']
     gem.add_dependency('visionmedia-terminal-table', '>=1.2.0')
+    gem.add_dependency('popen4', '>=0.1.2')
     gem.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"].exclude("rdoc").to_a.flatten
     gem.extra_rdoc_files = ["README.md"]
   end

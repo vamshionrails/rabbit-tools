@@ -55,8 +55,12 @@ module RabbitMQ
         RabbitMQ::Status::Bindings.new, 
         RabbitMQ::Status::Connections.new].each do |status|
         
-        rows = status.list
-
+        begin
+          rows = status.list
+        rescue => e
+          $stderr.puts "\n#{@formatter.red(e)}\n\n"
+          exit(-1)
+        end
         @out.puts @formatter.yellow(status.cmd)
         if rows && !rows.empty?
           info = table do |t|

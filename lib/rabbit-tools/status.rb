@@ -1,5 +1,6 @@
 #  Created by Stefan Saasen.
 #  Copyright (c) 2008. All rights reserved.
+require 'popen4'
 module RabbitMQ
   module Status
   
@@ -12,7 +13,11 @@ module RabbitMQ
       end
     
       def run_cmd
-        `#{@@binary} #{@cmd} #{@args.join(' ')}`
+        output = nil
+        status = POpen4::popen4("#{@@binary} #{@cmd} #{@args.join(' ')}") do |stdout, stderr, stdin, pid|
+          output = stdout.read.strip
+        end
+        status ? output : (raise IOError.new("Failed to execute #{@@binary} - Make sure the RABBITMQ_HOME/sbin directory was added to your PATH"))
       end
     
       @protected
@@ -20,6 +25,7 @@ module RabbitMQ
         lines = cmd_output.split("\n")
         lines[1..lines.length-2].map{|line| line.split("\t")}
       end
+      
       def list
         parse(run_cmd)
       end
