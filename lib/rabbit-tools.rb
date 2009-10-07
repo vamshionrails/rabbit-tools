@@ -42,7 +42,7 @@ module RabbitMQ
     
     def initialize
       @out = STDOUT
-      @formatter = RabbitMQ::Helper::Formatter.new
+      @formatter = RabbitMQ::Helper::FormatterFactory.new_formatter
     end
     
     def run(args)
@@ -77,7 +77,7 @@ module RabbitMQ
   end
 end
 
-if $0 == __FILE__
+if $0 == __FILE__  
   RabbitMQ::CLI.new.run(ARGV)
 end
 
