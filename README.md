@@ -22,6 +22,11 @@ command that dumps the following information about a local RabbitMQ server:
 Documentation
 -------------
 
+This release was successfully tested against:
+
+* RabbitMQ Server version 1.6.0
+* RabbitMQ Server version 1.7.0
+
 See: [http://dev.coravy.com/wiki/display/OpenSource/RabbitMQ+Tools](http://dev.coravy.com/wiki/display/OpenSource/RabbitMQ+Tools)
 
 Copyright
