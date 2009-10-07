@@ -26,10 +26,11 @@ module RabbitMQ
   
     class AbstractCommand      
       @@binary = "rabbitmqctl" # rabbitmqctl must be on $PATH
-      attr_reader :args, :cmd
+      attr_reader :cmd
+      attr_writer :header
     
       def initialize(cmd, args = [])
-        @cmd, @args = cmd, args
+        @cmd, @args, @header = cmd, args, []
         @formatter = Hash.new(Formatter::BaseFormatter.new)
       end
     
@@ -39,6 +40,10 @@ module RabbitMQ
           output = stdout.read.strip
         end
         status ? output : (raise IOError.new("Failed to execute #{@@binary} - Make sure the RABBITMQ_HOME/sbin directory was added to your PATH"))
+      end
+    
+      def header
+        @header.empty? ? @args : @header
       end
     
       @protected
@@ -79,6 +84,7 @@ module RabbitMQ
     class Bindings < AbstractCommand
       def initialize
         super "list_bindings"
+        self.header = ["exchange name", "routing key", "queue name", "binding arguments"]
       end
     end
   

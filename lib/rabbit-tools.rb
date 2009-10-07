@@ -53,7 +53,7 @@ module RabbitMQ
         @out.puts @formatter.yellow(status.cmd)
         if rows && !rows.empty?
           info = table do |t|
-            t.headings = status.args
+            t.headings = status.header
             rows.each do |lines|
               t << lines
             end
