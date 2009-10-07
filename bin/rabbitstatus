@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# == Synopsis 
+# The rabbitstatus command can be used to list the current RabbitMQ server status.
+#
+# == Usage
+# Run
+#   rabbitstatus 
+# to list the current RabbitMQ server status (list_queues, list_exchanges...)
+# == Author
+# Stefan Saasen
+#
+# == Copyright
+# Copyright(c), 2009 Stefan Saasen juretta.com
+require 'rabbit-tools'
+#require File.join(File.dirname(__FILE__) , "..", "lib", "rabbit-tools")
+
+RabbitMQ::CLI.new.run(ARGV)
