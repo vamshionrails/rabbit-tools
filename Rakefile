@@ -13,9 +13,12 @@ begin
     gem.bindir = 'bin'
     gem.executables = ['rabbitstatus']
     gem.add_dependency('visionmedia-terminal-table', '>=1.2.0')
-    gem.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"].to_a.flatten
+    gem.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"].exclude("rdoc").to_a.flatten
+    gem.extra_rdoc_files = ["README.md"]
   end
 
+  # Gemcutter support
+  #Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
