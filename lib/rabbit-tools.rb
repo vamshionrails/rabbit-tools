@@ -59,10 +59,14 @@ module RabbitMQ
             t << lines
           end
         end
-
+        
         @out.puts formatter.yellow(status.cmd)
-        @out.print info
-        @out.puts ""
+        if info && !info.empty?
+          @out.print info
+          @out.puts ""
+        else
+          @out.puts "-"
+        end
         @out.flush
       end
     end
