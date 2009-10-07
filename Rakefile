@@ -13,7 +13,7 @@ begin
     gem.bindir = 'bin'
     gem.executables = ['rabbitstatus']
     gem.add_dependency('visionmedia-terminal-table')
-    gem.files = FileList["{tests,lib}/**/*"].exclude("rdoc").to_a.flatten
+    gem.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"].to_a.flatten
   end
 
 rescue LoadError
