@@ -12,7 +12,7 @@ begin
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
     gem.bindir = 'bin'
     gem.executables = ['rabbitstatus']
-    gem.add_dependency('terminal-table', '>=1.3.5')
+    gem.add_dependency('visionmedia-terminal-table', '>=1.2.0')
     gem.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec}/**/*"].to_a.flatten
   end
 
