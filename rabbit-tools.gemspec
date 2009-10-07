@@ -38,10 +38,13 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<visionmedia-terminal-table>, [">= 1.2.0"])
+      s.add_runtime_dependency(%q<popen4>, [">= 0.1.2"])
     else
       s.add_dependency(%q<visionmedia-terminal-table>, [">= 1.2.0"])
+      s.add_dependency(%q<popen4>, [">= 0.1.2"])
     end
   else
     s.add_dependency(%q<visionmedia-terminal-table>, [">= 1.2.0"])
+    s.add_dependency(%q<popen4>, [">= 0.1.2"])
   end
 end
