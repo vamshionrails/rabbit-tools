@@ -6,6 +6,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = gem.rubyforge_project = "rabbit-tools" # http://rabbit-tools.rubyforge.org/
     gem.summary = %Q{RabbitMQ tools}
+    gem.description = "Command line tools for the RabbitMQ message broker."
     gem.email = "s@juretta.com"
     gem.homepage = "http://github.com/juretta/rabbit-tools"
     gem.authors = ["Stefan Saasen"]

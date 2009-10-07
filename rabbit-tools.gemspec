@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.authors = ["Stefan Saasen"]
   s.date = %q{2009-10-08}
   s.default_executable = %q{rabbitstatus}
+  s.description = %q{Command line tools for the RabbitMQ message broker.}
   s.email = %q{s@juretta.com}
   s.executables = ["rabbitstatus"]
   s.extra_rdoc_files = [
