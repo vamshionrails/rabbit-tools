@@ -1,0 +1,7 @@
+= rabbit-tools
+
+Description goes here.
+
+== Copyright
+
+Copyright (c) 2009 Stefan Saasen. See LICENSE for details.
