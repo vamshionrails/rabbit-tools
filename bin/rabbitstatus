@@ -11,7 +11,7 @@
 #
 # == Copyright
 # Copyright(c), 2009 Stefan Saasen juretta.com
-require 'rabbit-tools'
-#require File.join(File.dirname(__FILE__) , "..", "lib", "rabbit-tools")
+#require 'rabbit-tools'
+require File.join(File.dirname(__FILE__) , "..", "lib", "rabbit-tools")
 
 RabbitMQ::CLI.new.run(ARGV)

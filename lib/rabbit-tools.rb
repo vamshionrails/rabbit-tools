@@ -35,37 +35,52 @@ module RabbitMQ
     end
     
     def run(args)
-      
-      # TODO 
-      #   Extract command line args to specify the rabbitmqctl binary
-      
+      dump_status
+    end
+    
+    private
+    
+    def dump_admin
+      [
+        RabbitMQ::Status::Users.new, 
+        RabbitMQ::Status::Vhosts.new,
+        RabbitMQ::Status::Permissions.new].each do |status|
+        print_status status
+      end
+    end
+    
+    def dump_status      
       [RabbitMQ::Status::Queues.new, 
         RabbitMQ::Status::Exchanges.new, 
         RabbitMQ::Status::Bindings.new, 
         RabbitMQ::Status::Connections.new].each do |status|
-        
-        begin
-          rows = status.list
-        rescue => e
-          $stderr.puts "\n#{@formatter.red(e)}\n\n"
-          exit(-1)
-        end
-        @out.puts @formatter.yellow(status.cmd)
-        if rows && !rows.empty?
-          info = table do |t|
-            t.headings = status.header
-            rows.each do |lines|
-              t << lines
-            end
-          end
-          @out.print info
-          @out.puts ""
-        else
-          @out.puts "-"
-        end
-        @out.flush
-        @formatter.reset!
+        print_status status
       end
+    end
+    
+    
+    def print_status(status)
+      begin
+        rows = status.list
+      rescue => e
+        $stderr.puts "\n#{@formatter.red(e)}\n\n"
+        exit(-1)
+      end
+      @out.puts @formatter.yellow(status.description)
+      if rows && !rows.empty?
+        info = table do |t|
+          t.headings = status.header
+          rows.each do |lines|
+            t << lines
+          end
+        end
+        @out.print info
+        @out.puts ""
+      else
+        @out.puts "-"
+      end
+      @out.flush
+      @formatter.reset!
     end
   end
 end

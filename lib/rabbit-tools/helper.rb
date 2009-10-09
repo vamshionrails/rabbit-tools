@@ -56,5 +56,6 @@ module RabbitMQ
           @buffer.join('')
         end
       end
-    end
+       
+  end
 end

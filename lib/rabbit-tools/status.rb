@@ -28,31 +28,37 @@ module RabbitMQ
       @@binary = "rabbitmqctl" # rabbitmqctl must be on $PATH
       attr_reader :cmd
       attr_writer :header
+      attr_accessor :description
     
       def initialize(cmd, args = [])
         @cmd, @args, @header = cmd, args, []
         @formatter = Hash.new(Formatter::BaseFormatter.new)
       end
     
-      def run_cmd
+      def header
+        @header.empty? ? @args : @header
+      end
+      
+      def description
+        @description.nil? ? @cmd : @description
+      end
+    
+      @private
+      def execute_cmd(cmd, args = [])
         output = nil
-        status = POpen4::popen4("#{@@binary} #{@cmd} #{@args.join(' ')}") do |stdout, stderr, stdin, pid|
+        status = POpen4::popen4("#{@@binary} #{cmd} #{args.join(' ')}") do |stdout, stderr, stdin, pid|
           output = stdout.read.strip
         end
         status ? output : (raise IOError.new("Failed to execute #{@@binary} - Make sure the RABBITMQ_HOME/sbin directory was added to your PATH"))
       end
-    
-      def header
-        @header.empty? ? @args : @header
-      end
-    
-      @protected
       
       def register_formatter(name, formatter)
         @formatter[name.to_s] = formatter
       end
       
-      def parse(cmd_output)
+      def parse_cmd(cmd, args = [])
+        cmd_output= execute_cmd(cmd, args)
+        print "cmd_output: #{cmd_output}" if $DEBUG
         lines = cmd_output.split("\n")
         lines[1..lines.length-2].map do |line|
           output = []
@@ -60,11 +66,11 @@ module RabbitMQ
             output << @formatter[@args[idx].to_s].format(elem)
           end
           output        
-        end#.map{|line| line.split("\t")}
+        end
       end
       
       def list
-        parse(run_cmd)
+        parse_cmd(@cmd, @args)
       end      
     end
 
@@ -94,5 +100,32 @@ module RabbitMQ
       end
     end
   
+    class Users < AbstractCommand
+      def initialize
+        super "list_users"
+        self.header = ["username"]
+      end
+    end # Users
+  
+    class Vhosts < AbstractCommand
+      def initialize
+        super "list_vhosts"
+        self.header = ["vhost"]
+      end
+    end # Vhosts
+  
+    class Permissions < AbstractCommand
+      def initialize(host = '/')
+        super "list_permissions"
+        self.header, @host = ["host", "user", "configure permission", "write permission", "read permission"], host
+        @hosts = parse_cmd("list_vhosts")
+      end
+      
+      def list
+        @hosts.map do |host|
+          parse_cmd(@cmd, ["-p #{host}"]).flatten.unshift host
+        end
+      end
+    end # Permissions
   end
 end
