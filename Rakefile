@@ -51,28 +51,29 @@ task :inject_version do
   if File.exist?('VERSION')
     major, minor, patch = File.read('VERSION').split("\.")
     version = "#{major}.#{minor}.#{patch}".strip
-    f = 'lib/rabbit-tools.rb'
-    lines = IO.readlines(f).join
+    file = 'lib/rabbit-tools.rb'
+    lines = IO.readlines(file).join
     
     r = /(VERSION = "([^\"]+)")/
     current = nil
     if lines =~ r
       current = $2.dup
     end
-    
+
     if current && !version.eql?(current)
-      File.open(f, 'w') do |f|
-        f << lines.gsub(r) do |r|
+      File.open(file, 'w') do |f|
+        f << lines.gsub(r) do |match|
           "VERSION = \"#{version}\""
         end
       end
-      `git add #{f}`
+      `git add #{file}`
       `git commit -m 'Injected version information (#{version})'`
     end
   end
 end
 
 task :build => [:inject_version]
+task :release => [:inject_version]
 task :default => :test
 
 require 'rake/rdoctask'
