@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rabbit-tools}
-  s.version = "0.1.8"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Stefan Saasen"]
-  s.date = %q{2009-10-08}
+  s.date = %q{2009-10-09}
   s.default_executable = %q{rabbitstatus}
   s.description = %q{Command line tools for the RabbitMQ message broker.}
   s.email = %q{s@juretta.com}
