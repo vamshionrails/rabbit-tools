@@ -30,7 +30,7 @@ Dir[File.join(File.dirname(__FILE__), 'rabbit-tools', '**', '*.rb')].sort.each {
 module RabbitMQ
   
   class CLI # :nodoc:
-    VERSION = "0.2.0"
+    VERSION = "0.2.1"
     
     def initialize
       @out = STDOUT
