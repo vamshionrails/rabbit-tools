@@ -53,10 +53,21 @@ task :inject_version do
     version = "#{major}.#{minor}.#{patch}".strip
     f = 'lib/rabbit-tools.rb'
     lines = IO.readlines(f).join
-    File.open(f, 'w') do |f|
-      f << lines.gsub(/(VERSION = "([^\"]+)")/) do |r|
-        "VERSION = \"#{version}\""
+    
+    r = /(VERSION = "([^\"]+)")/
+    current = nil
+    if lines =~ r
+      current = $2.dup
+    end
+    
+    if current && !version.eql?(current)
+      File.open(f, 'w') do |f|
+        f << lines.gsub(r) do |r|
+          "VERSION = \"#{version}\""
+        end
       end
+      `git add #{f}`
+      `git commit -m 'Injected version information (#{version})'`
     end
   end
 end
