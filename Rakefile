@@ -47,6 +47,21 @@ rescue LoadError
 end
 
 
+task :inject_version do 
+  if File.exist?('VERSION')
+    major, minor, patch = File.read('VERSION').split("\.")
+    version = "#{major}.#{minor}.#{patch}".strip
+    f = 'lib/rabbit-tools.rb'
+    lines = IO.readlines(f).join
+    File.open(f, 'w') do |f|
+      f << lines.gsub(/(VERSION = "([^\"]+)")/) do |r|
+        "VERSION = \"#{version}\""
+      end
+    end
+  end
+end
+
+task :build => [:inject_version]
 task :default => :test
 
 require 'rake/rdoctask'

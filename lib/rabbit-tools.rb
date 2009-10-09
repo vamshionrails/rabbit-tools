@@ -20,6 +20,8 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #++
+require 'optparse'
+require 'ostruct'
 require 'terminal-table/import'
 Dir[File.join(File.dirname(__FILE__), 'rabbit-tools', '**', '*.rb')].sort.each { |lib| require lib }
 
@@ -28,14 +30,32 @@ Dir[File.join(File.dirname(__FILE__), 'rabbit-tools', '**', '*.rb')].sort.each {
 module RabbitMQ
   
   class CLI # :nodoc:
+    VERSION = "0.1.8"
     
     def initialize
       @out = STDOUT
       @formatter = RabbitMQ::Helper::FormatterFactory.new_formatter
+      @options = ::OpenStruct.new
+      @options.command = :dump_status
     end
     
     def run(args)
-      dump_status
+      opts = OptionParser.new do |opts|
+        opts.banner = "Usage: #$0 [options]"
+        opts.on('-a', '--admin', 'Print vhosts, users and permissions') do
+          @options.command = :dump_admin
+        end
+        opts.on_tail('-h', '--help', 'display this help and exit') do
+          puts opts
+          exit
+        end
+        opts.on_tail("--version", "Show version") do
+          puts "Version: #{VERSION}"
+          exit
+        end
+      end
+      opts.parse!(args)
+      self.send @options.command
     end
     
     private
