@@ -25,6 +25,23 @@ command that dumps the following information about a local RabbitMQ server:
 * list queues
 * list_connections
 
+Run
+
+	rabbitstatus --help
+
+to see the available options.
+
+
+You can run 
+
+	rabbitstatus --admin
+	
+to dump the following information:
+
+* list_users
+* list_vhosts
+* list_permissions (for each vhost defined)
+
 Documentation
 =============
 
