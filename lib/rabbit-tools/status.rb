@@ -90,7 +90,9 @@ module RabbitMQ
     class Bindings < AbstractCommand
       def initialize
         super "list_bindings"
-        self.header = ["exchange name", "routing key", "queue name", "binding arguments"]
+        # Documented behaviour but that seems to be wrong. Bug reported.
+        #self.header = ["exchange name", "routing key", "queue name", "binding arguments"]
+        self.header = ["exchange name", "queue name", "routing key", "binding arguments"]
       end
     end
   
