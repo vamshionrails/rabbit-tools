@@ -42,6 +42,23 @@ to dump the following information:
 * list_vhosts
 * list_permissions (for each vhost defined)
 
+Installation
+============
+
+Install this gem by running
+
+	[sudo] gem install rabbit-tools
+	
+Make sure the `rabbitmqctl` command is in your `$PATH`
+
+	stefan@macbookpro:~/rabbit-tools (master) [0]$ which rabbitmqctl
+	/opt/rabbitmq/current/sbin/rabbitmqctl
+
+If it isn't add the `sbin` directory to your PATH environment variable:
+
+	RABBIT_HOME=/path/to/rabbit-server
+	export PATH=$PATH:$RABBIT_HOME/sbin
+
 Documentation
 =============
 
@@ -52,7 +69,8 @@ This release was successfully tested against:
 
 See: [http://dev.coravy.com/wiki/display/OpenSource/RabbitMQ+Tools](http://dev.coravy.com/wiki/display/OpenSource/RabbitMQ+Tools)
 
+
 Copyright
 =========
 
-Copyright (c) 2009 Stefan Saasen. See LICENSE for details.
+Copyright (c) 2009 Stefan Saasen. See LICENSE (MIT) for details but feel free to just use it!
