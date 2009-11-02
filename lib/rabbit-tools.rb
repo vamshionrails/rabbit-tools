@@ -53,27 +53,32 @@ module RabbitMQ
           puts "Version: #{VERSION}"
           exit
         end
+        opts.on_tail('--vhost VHOST', 'use the given virtual host') do |vhost|
+          @options.vhost = vhost
+        end
       end
       opts.parse!(args)
-      self.send @options.command
+      self.send @options.command, @options
+    rescue OptionParser::MissingArgument => e
+      puts "Error: #{e}"
     end
     
     private
     
-    def dump_admin
+    def dump_admin(options)
       [
-        RabbitMQ::Status::Users.new, 
-        RabbitMQ::Status::Vhosts.new,
-        RabbitMQ::Status::Permissions.new].each do |status|
+        RabbitMQ::Status::Users.new(options), 
+        RabbitMQ::Status::Vhosts.new(options),
+        RabbitMQ::Status::Permissions.new(options)].each do |status|
         print_status status
       end
     end
     
-    def dump_status      
-      [RabbitMQ::Status::Queues.new, 
-        RabbitMQ::Status::Exchanges.new, 
-        RabbitMQ::Status::Bindings.new, 
-        RabbitMQ::Status::Connections.new].each do |status|
+    def dump_status(options)
+      [RabbitMQ::Status::Queues.new(options), 
+        RabbitMQ::Status::Exchanges.new(options), 
+        RabbitMQ::Status::Bindings.new(options), 
+        RabbitMQ::Status::Connections.new(options)].each do |status|
         print_status status
       end
     end

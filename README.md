@@ -1,4 +1,5 @@
 
+
 	+---+   +---+
 	|   |   |   |
 	|   |   |   |
@@ -41,6 +42,9 @@ to dump the following information:
 * list_users
 * list_vhosts
 * list_permissions (for each vhost defined)
+
+
+Use --vhost VHOST to print information regarding this particular virtual host.
 
 Installation
 ============

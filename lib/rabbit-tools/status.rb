@@ -75,21 +75,24 @@ module RabbitMQ
     end
 
     class Queues < AbstractCommand
-      def initialize
-        super "list_queues", %w(name durable auto_delete messages_ready messages_unacknowledged messages consumers memory transactions node)
+      def initialize(options = nil)
+        host = options.vhost || '/' # FIXME cleanup option handling
+        super "list_queues -p #{host}", %w(name durable auto_delete messages_ready messages_unacknowledged messages consumers memory transactions node)
         register_formatter "memory", Formatter::ByteFormatter.new 
       end
     end
   
     class Exchanges < AbstractCommand
-      def initialize
-        super "list_exchanges",  %w(name durable auto_delete type)
+      def initialize(options = nil)
+        host = options.vhost || '/' # FIXME cleanup option handling
+        super "list_exchanges -p #{host}",  %w(name durable auto_delete type)
       end
     end
   
     class Bindings < AbstractCommand
-      def initialize
-        super "list_bindings"
+      def initialize(options = nil)
+        host = options.vhost || '/' # FIXME cleanup option handling
+        super "list_bindings -p #{host}"
         # Documented behaviour but that seems to be wrong. Bug reported.
         #self.header = ["exchange name", "routing key", "queue name", "binding arguments"]
         self.header = ["exchange name", "queue name", "routing key", "binding arguments"]
@@ -97,29 +100,29 @@ module RabbitMQ
     end
   
     class Connections < AbstractCommand
-      def initialize
+      def initialize(options = nil)
         super "list_connections", %w(node address port peer_address peer_port state channels user vhost timeout frame_max recv_oct recv_cnt send_oct send_cnt send_pend)
       end
     end
   
     class Users < AbstractCommand
-      def initialize
+      def initialize(options = nil)
         super "list_users"
         self.header = ["username"]
       end
     end # Users
   
     class Vhosts < AbstractCommand
-      def initialize
+      def initialize(options = nil)
         super "list_vhosts"
         self.header = ["vhost"]
       end
     end # Vhosts
   
     class Permissions < AbstractCommand
-      def initialize(host = '/')
+      def initialize(options = nil)
         super "list_permissions"
-        self.header, @host = ["host", "user", "configure permission", "write permission", "read permission"], host
+        self.header = ["host", "user", "configure permission", "write permission", "read permission"]
         @hosts = parse_cmd("list_vhosts")
       end
       
